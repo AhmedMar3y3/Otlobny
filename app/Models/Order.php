@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Order extends Model
 {
     use HasFactory;
-
     protected $table = 'orders';
 
     protected $fillable = [
@@ -29,6 +28,7 @@ class Order extends Model
         'total_price',
         'pay_type',
         'pay_status',
+        'store_id',
     ];
 
     protected $casts = [
@@ -68,5 +68,10 @@ class Order extends Model
         static::creating(function ($model) {
             $model->order_num = self::generateOrderNum();
         });
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 }

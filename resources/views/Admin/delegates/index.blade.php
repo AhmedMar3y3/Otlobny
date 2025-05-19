@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('Admin.layout')
 @section('main')
 <div class="container text-end">
     <h2>جميع مندوبي التوصيل </h2>

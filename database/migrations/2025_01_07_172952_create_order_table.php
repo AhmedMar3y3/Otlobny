@@ -29,6 +29,7 @@ return new class extends Migration
             $table->tinyInteger('pay_type');
             $table->tinyInteger('pay_status')->default(0);
             $table->boolean('is_accepted')->default(false);
+            $table->foreignId('store_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

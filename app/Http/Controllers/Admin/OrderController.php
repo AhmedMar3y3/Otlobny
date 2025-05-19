@@ -24,7 +24,7 @@ class OrderController extends Controller
 
         $delegates = Delegate::where('is_active', true)->get();
 
-        return view("Store.orders.index", compact("orders", "delegates"));
+        return view("Admin.orders.index", compact("orders", "delegates"));
     }
 
     public function show($id)

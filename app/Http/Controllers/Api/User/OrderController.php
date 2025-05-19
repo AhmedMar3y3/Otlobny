@@ -34,7 +34,8 @@ class OrderController extends Controller
 
             $order = Order::create($addressData + $prices + [
                 'user_id' => $user->id,
-                'pay_type' => $request->pay_type
+                'pay_type' => $request->pay_type,
+                // 'store_id' => $user->carts()->first()->product->store_id,
             ]);
 
             (new OrderItemsService())->createOrderItems($order, $user);

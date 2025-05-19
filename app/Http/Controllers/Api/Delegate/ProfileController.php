@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Api\Delegate;
 
-use App\Models\Faq;
 use App\Models\Order;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\User\FaqResource;
 use App\Http\Requests\Api\StoreFCMTokenRequest;
 use App\Http\Requests\Api\Delegate\UpdateProfileRequest;
 use App\Http\Resources\Api\Delegate\DelegateOrdersResource;
@@ -28,12 +26,6 @@ class ProfileController extends Controller
         $delegate->update($request->validated());
 
         return $this->successWithDataResponse(new DelegateProfileResource($delegate));
-    }
-
-    public function faqs()
-    {
-        $faqs = Faq::get(['id', 'question', 'answer']);
-        return $this->successWithDataResponse(FaqResource::collection($faqs));
     }
 
     public function myOrders()

@@ -1,4 +1,13 @@
 <!-- resources/views/partials/sidebar.blade.php -->
+<style>
+    .sidebar .nav .nav-item.active > .nav-link {
+        background: #8f8f8f !important;
+    }
+    .sidebar .nav:not(.sub-menu) > .nav-item:hover:not(.nav-category):not(.account-dropdown) > .nav-link {
+        background: #8f8f8f !important;
+        color: #ffffff !important;
+    }
+</style>
 <nav class="sidebar sidebar-offcanvas" id="sidebar" style="background: white">
 
     <ul class="sidebar-brand-wrapper d-lg-flex align-items-center justify-content-center fixed-top  "style="background: white">
@@ -74,11 +83,11 @@
             </a>
         </li>
         <li class="nav-item menu-items">
-            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.products.index') }}">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.stores.index') }}">
               
-                <span class="menu-title me-2">المنتجات</span>
+                <span class="menu-title me-2">المحلات</span>
                 <span class="menu-icon">
-                    <i class="fa fa-cubes"></i>
+                    <i class="fa fa-store"></i>
                 </span>
             </a>
         </li>
@@ -88,14 +97,6 @@
                 <span class="menu-title me-2">مندوبي التوصيل</span>
                 <span class="menu-icon">
                     <i class="fa fa-solid fa-motorcycle"></i>
-                </span>
-            </a>
-        </li>
-       <li class="nav-item menu-items">
-            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.faqs.index') }}"> 
-                <span class="menu-title me-2">الاسئلة الشائعة</span>
-                <span class="menu-icon">
-                    <i class="fa fa-question-circle"></i>
                 </span>
             </a>
         </li>
