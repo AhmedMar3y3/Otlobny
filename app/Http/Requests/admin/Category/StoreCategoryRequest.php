@@ -8,6 +8,7 @@ class StoreCategoryRequest extends BaseRequest
 {
     public function rules(): array
     {
+        
         return [
             'name'   =>
             [

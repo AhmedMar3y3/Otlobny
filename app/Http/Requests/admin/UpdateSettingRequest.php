@@ -23,10 +23,10 @@ class UpdateSettingRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'delivery_price_per_km'               => [
+            'delivery_price_per_km'   => [
                 'required',
                 'numeric',
-                'min:0',
+                'min:0'
             ],
         ];
     }

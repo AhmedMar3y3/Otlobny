@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Product;
-use App\Models\Addition;
-use App\Models\Delegate;
-use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Store;
+use App\Models\Product;
+use App\Models\Delegate;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
