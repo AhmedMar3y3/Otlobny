@@ -1,4 +1,4 @@
-@extends('Admin.layout')
+@extends('Super.layout')
 
 @section('main')
 <div class="container text-end">
@@ -13,7 +13,7 @@
     @endif
 
     <!-- Search and Filter Form -->
-    <form method="GET" action="{{ route('admin.stores.index') }}" class="mb-4">
+    <form method="GET" action="{{ route('super.stores.index') }}" class="mb-4">
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="search" class="form-label">البحث حسب الاسم</label>
@@ -38,7 +38,7 @@
         <thead>
             <tr>
                 <th>الإجراءات</th>
-                <th>الحالة</th>
+                <th>المسؤول</th>
                 <th>التقييم</th>
                 <th>الاسم</th>
                 <th>#</th>
@@ -48,16 +48,32 @@
             @forelse ($stores as $store)
             <tr>
                 <td>
-                    <a href="{{ route('admin.stores.show', $store->id) }}" class="btn btn-info btn-rounded btn-sm" style="display:inline-block;">
+                    <a href="{{ route('super.stores.show', $store->id) }}" class="btn btn-info btn-rounded btn-sm" style="display:inline-block;">
                         <i class="fa fa-eye"></i>
                     </a>
+                    <form action="{{ route('super.stores.destroy', $store->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد؟');" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-rounded btn-sm"><i class="fa fa-trash"></i></button>
+                    </form>
                 </td>
                 <td>
-                    <form action="{{ route('admin.stores.activate', $store->id) }}" method="POST">
+                    <form action="{{ route('super.stores.changeAdmin', $store->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn {{ $store->is_active ? 'btn-success' : 'btn-secondary' }} btn-sm">
-                            {{ $store->is_active ? 'نشط' : 'غير نشط' }}
-                        </button>
+                        <div class="input-group">
+                            <select name="admin_id" class="form-select form-select-sm" required>
+                                <option value="" {{ is_null($store->admin_id) ? 'selected' : '' }}>لا يوجد مسؤول</option>
+                                @foreach ($admins as $admin)
+                                    <option value="{{ $admin->id }}" {{ $store->admin_id == $admin->id ? 'selected' : '' }}>
+                                        {{ $admin->name }} ({{ $admin->area }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">تغيير</button>
+                        </div>
+                        @error('admin_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </form>
                 </td>
                 <td>{{ $store->rating }}</td>

@@ -10,7 +10,7 @@ class store extends BaseRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:supers,email',
             'password' => 'required|string|min:6',
         ];
     }

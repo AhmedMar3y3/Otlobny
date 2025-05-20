@@ -14,7 +14,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
-  use HttpResponses;
+    use HttpResponses;
+
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -36,31 +37,35 @@ class Handler extends ExceptionHandler
         });
     }
 
+    public function render($request, Throwable $exception)
+    {
+        // Handle API routes
+        if ($request->is('api/*')) {
+            if ($exception instanceof ModelNotFoundException) {
+                $msg = 'العنصر غير موجود';
+            }
 
-  public function render($request, Throwable $exception) {
-    if ($request->is('api/*')) {
-      if ($exception instanceof ModelNotFoundException) {
-        $msg = 'العنصر غير موجود';
-      }
+            if ($exception instanceof NotFoundHttpException) {
+                $msg = 'ال url غير موجود';
+            }
 
-      if ($exception instanceof NotFoundHttpException) {
-        $msg = 'ال url غير موجود';
-      }
+            if ($exception instanceof AuthenticationException) {
+                return $this->unauthenticatedResponse();
+            }
 
-      if ($exception instanceof AuthenticationException) {
-        return $this->unauthenticatedResponse();
-      }
+            if ($exception instanceof ThrottleRequestsException) {
+                $retryAfter = (Carbon::now()->diffInMinutes(Carbon::parse($exception->getHeaders()['X-RateLimit-Reset']))) ?? 30;
+                return $this->failureResponse(__('apis.throttle', ['minutes' => $retryAfter]));
+            }
 
-      if ($exception instanceof ThrottleRequestsException) {
-          $retryAfter = (Carbon::now()->diffInMinutes(Carbon::parse($exception->getHeaders()['X-RateLimit-Reset']))) ?? 30;
-          return $this->failureResponse(__('apis.throttle', ['minutes' => $retryAfter]));
-      }
+            return $this->response('exception', $msg ?? $exception->getMessage(),
+                ['line' => $exception->getLine(), 'file' => $exception->getFile()], 500);
+        }
 
-      return $this->response('exception', $msg ?? $exception->getMessage(),
-        ['line' => $exception->getLine(), 'file' => $exception->getFile()],500);
+        if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
+            return response()->view('404', [], 404);
+        }
+
+        return parent::render($request, $exception);
     }
-
-    return parent::render($request, $exception);
-  }
-
 }

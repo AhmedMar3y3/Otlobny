@@ -13,7 +13,7 @@ use App\Services\PaymentGateway\PaymentService;
 use App\Http\Controllers\Api\User\ReviewController;
 
 
-Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@register');
+Route::post('/register-super', 'App\Http\Controllers\Super\AuthController@register');
 
 //////////////////////////////////////// User Routes ////////////////////////////////////////
 //public routes

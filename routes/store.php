@@ -1,12 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Store\AuthController;
 use App\Http\Controllers\Store\HomeController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Store\OrderController;
 use App\Http\Controllers\Store\ProductController;
-use App\Http\Controllers\Store\CategoryController;
-use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Store\ProfileController;
+use App\Http\Controllers\Store\CategoryController;
 
 Route::prefix('store')->group(function () {
 

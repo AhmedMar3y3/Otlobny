@@ -2,38 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Authenticatable
+class Super extends Authenticatable
 {
     use HasFactory;
 
+    protected $table = 'supers';
+
     protected $fillable = [
         'name',
-        'area',
         'email',
-        'code',
         'password',
+        'code',
     ];
 
-    protected $hidden = [
+     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
-
-    protected static function boot()
+     protected static function boot()
     {
         parent::boot();
 
@@ -51,10 +44,5 @@ class Admin extends Authenticatable
         } while (self::where('code', $code)->exists());
 
         return $code;
-    }
-
-    public function stores()
-    {
-        return $this->hasMany(Store::class);
     }
 }

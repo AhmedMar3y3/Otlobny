@@ -150,6 +150,11 @@
     <div class="container-fluid">
         <div class="row">
            <div class="col-12 text-center">
+            <div class="form-title mb-4">
+                    <h2 style="font-weight:600; color:#2980b9; letter-spacing:1px; background:rgba(255,255,255,0.85); display:inline-block; padding:10px 30px; border-radius:8px; box-shadow:0 2px 8px rgba(41,128,185,0.08);">
+                        تسجيل دخول المحلات 
+                    </h2>
+                </div>
             <div class="form">
                 <form class="login mt-3" action="{{ route('loginStore') }}" method="POST">
                     @csrf

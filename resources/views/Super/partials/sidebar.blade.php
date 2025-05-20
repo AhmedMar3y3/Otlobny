@@ -16,13 +16,13 @@
             <a class="nav-link " id="profileDropdown" href="#" data-bs-toggle="dropdown" >
             <div class="navbar-profile d-flex gap-2" style="color: black">
                 
-                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::guard('admin')->user()->name }}</p>
+                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::guard('super')->user()->name }}</p>
                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 <img class="img-xs rounded-circle" src="{{ asset("../../../assets/images/dashboard/avatar.png") }}" alt="">
             </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="profileDropdown" style="background: white">
-            <a class="dropdown-item preview-item d-flex align-items-center justify-content-center" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a class="dropdown-item preview-item d-flex align-items-center justify-content-center" href="{{ route('super.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <div class="preview-thumbnail">
                 <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-logout text-danger"></i>
@@ -32,7 +32,7 @@
                 <p class="preview-subject mb-1 " style="color: black">Log out</p>
                 </div>
             </a>
-            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('super.logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
             </div>
@@ -44,7 +44,7 @@
                 <div class="profile-pic d-flex align-items-center justify-content-end gap-2 w-100">
                    
                     <div class="profile-name">
-                        <h5 class="mb-0 font-weight-normal">{{ Auth::guard('admin')->user()->name }}</h5>
+                        <h5 class="mb-0 font-weight-normal">{{ Auth::guard('super')->user()->name }}</h5>
                         <span>online</span>
                     </div>
                     <div class="count-indicator">
@@ -56,7 +56,7 @@
         </li>
       
         <li class="nav-item menu-items my-1">
-            <a class="nav-link d-flex gap-2" href="{{ route('admin.dashboard') }}">
+            <a class="nav-link d-flex gap-2" href="{{ route('super.dashboard') }}">
               
                 <span class="menu-title ms-5">الصفحة الرئيسية</span>
                 <span class="menu-icon">
@@ -65,16 +65,25 @@
             </a>
         </li>
         <li class="nav-item menu-items">
-            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.orders.index') }}">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('super.admins.index') }}">
               
-                <span class="menu-title me-2">الطلبات</span>
+                <span class="menu-title me-2">المديرين</span>
                 <span class="menu-icon">
-                    <i class="fa fa-shopping-cart"></i>
+                    <i class="fa fa-user-shield"></i>
                 </span>
             </a>
         </li>
         <li class="nav-item menu-items">
-            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.stores.index') }}">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('super.categories.index') }}">
+              
+                <span class="menu-title me-2">الفئات</span>
+                <span class="menu-icon">
+                    <i class="fa fa-tags"></i>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('super.stores.index') }}">
               
                 <span class="menu-title me-2">المحلات</span>
                 <span class="menu-icon">
@@ -82,12 +91,29 @@
                 </span>
             </a>
         </li>
-        <li class="nav-item menu-items">
-            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.delegates.index') }}">
+        {{-- <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('super.delegates.index') }}">
               
                 <span class="menu-title me-2">مندوبي التوصيل</span>
                 <span class="menu-icon">
                     <i class="fa fa-solid fa-motorcycle"></i>
+                </span>
+            </a>
+        </li>  --}}
+        <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('super.banners.index') }}">
+              
+                <span class="menu-title me-2">البانرات</span>
+                <span class="menu-icon">
+                    <i class="fa fa-image"></i>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('super.settings.index') }}">
+                <span class="menu-title me-2">الإعدادات</span>
+                <span class="menu-icon">
+                    <i class="fa fa-cogs"></i>
                 </span>
             </a>
         </li>

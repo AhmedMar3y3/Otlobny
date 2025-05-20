@@ -23,8 +23,10 @@ return new class extends Migration
             $table->integer('delivery_time_max')->default(45);
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('cascade');
             $table->boolean('is_active')->default(false);
+            $table->string('area');
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
+            $table->foreignId('admin_id')->nullable()->constrained('admins')->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -27,7 +27,7 @@ class ProductController extends Controller
     // Show a specific product details
     public function show(Product $product, $id)
     {
-        $product = Product::with('category')->find($id);
+        $product = Product::with('category')->findOrFail($id);
         return view('Store.products.show', compact('product'));
     }
 

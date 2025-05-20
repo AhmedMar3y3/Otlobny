@@ -12791,7 +12791,7 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
   --bs-card-cap-padding-y: 0.5rem;
   --bs-card-cap-padding-x: 1rem;
   --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.03);
-  --bs-card-cap-color: ;
+  --bs-card-cap-color: black;
   --bs-card-height: ;
   --bs-card-color: #000000 ;
   --bs-card-bg: #ffffff;
@@ -12861,7 +12861,7 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
   padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
   margin-bottom: 0;
   color: var(--bs-card-cap-color);
-  background-color: var(--bs-card-cap-bg);
+  background-color: #8F8F8F !important;
   border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 .card-header:first-child {
@@ -12871,7 +12871,7 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
 .card-footer {
   padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
   color: var(--bs-card-cap-color);
-  background-color: var(--bs-card-cap-bg);
+  background-color: #8F8F8F !important;
   border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 .card-footer:last-child {

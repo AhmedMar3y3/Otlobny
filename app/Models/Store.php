@@ -24,6 +24,8 @@ class Store extends Authenticatable
         'is_active',
         'lat',
         'lng',
+        'admin_id',
+        'area'
     ];
 
     protected $hidden = [
@@ -68,5 +70,10 @@ class Store extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
     }
 }

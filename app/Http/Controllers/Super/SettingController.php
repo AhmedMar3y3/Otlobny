@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Super;
 
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ class SettingController extends Controller
     public function index()
     {
         $data = Setting::pluck('value', 'key');
-        return view('Admin.settings.index', compact('data'));
+        return view('Super.settings.index', compact('data'));
     }
 
     public function update(UpdateSettingRequest $request)
@@ -22,6 +22,6 @@ class SettingController extends Controller
                 ['value' => $value]
             );
         }
-        return redirect()->route('admin.settings.index')->with('success', 'تم تحديث الإعدادات بنجاح.');
+        return redirect()->route('super.settings.index')->with('success', 'تم تحديث الإعدادات بنجاح.');
     }
 }

@@ -67,7 +67,8 @@ class Kernel extends HttpKernel
         'auth.admin' => \App\Http\Middleware\Admin::class,
         'auth.store' => \App\Http\Middleware\Store::class,
         'api_lang' => \App\Http\Middleware\Api\Lang::class,
-        'auth.delegate' => \App\Http\Middleware\Delegate::class
+        'auth.delegate' => \App\Http\Middleware\Delegate::class,
+        'auth.super' => \App\Http\Middleware\Super::class,
 
     ];
 }

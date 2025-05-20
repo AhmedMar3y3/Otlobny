@@ -1,4 +1,4 @@
-@extends('Admin.layout')
+@extends('Super.layout')
 
 @section('main')
 <div class="container text-end">
@@ -12,7 +12,7 @@
     @endif
 
     <!-- Settings Form -->
-    <form action="{{ route('admin.settings.update') }}" method="POST">
+    <form action="{{ route('super.settings.update') }}" method="POST">
         @csrf
         @method('PUT')
 

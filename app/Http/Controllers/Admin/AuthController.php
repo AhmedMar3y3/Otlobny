@@ -2,25 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin;
-use App\Http\Requests\admin\store;
 use App\Http\Requests\admin\login;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    //API
-    public function register(store $request)
-    {
-        if (Admin::exists()) {
-            return response()->json(['error' => 'المسؤول موجود بالفعل'], 403);
-        }
-        $admin = Admin::create($request->validated());
-        return response()->json($admin, 201);
-    }
-
-    //WEB
     public function loadLoginPage()
     {
         return view('Admin.login');

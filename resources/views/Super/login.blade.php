@@ -140,30 +140,30 @@ a {
     <div class="container-fluid">
         <div class="row ">
            <div class="col-12 text-center">
-                <div class="form-title mb-4">
+               <div class="form-title mb-4">
                     <h2 style="font-weight:600; color:#2980b9; letter-spacing:1px; background:rgba(255,255,255,0.85); display:inline-block; padding:10px 30px; border-radius:8px; box-shadow:0 2px 8px rgba(41,128,185,0.08);">
-                        تسجيل دخول مديري المناطق
+                        تسجيل دخول الأدمن 
                     </h2>
                 </div>
-                <div class="form">
-                    <form class="login mt-3" action="{{ route('loginUser') }}" method="POST">
-                        @csrf
-                        
-                        @if (Session::has('success'))
-                        <div class="alert alert-success">{{ Session::get('success') }}</div>
-                        @endif
-                        @if (Session::has('error'))
-                        <div class="alert alert-danger">{{ Session::get('error') }}</div>
-                        @endif
-             
-                        <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
-                        <span class="text-danger">@error('email'){{ $message }}@enderror</span>
-             
-                        <input type="password" name="password" placeholder="Password">
-             
-                        <button type="submit">Login</button>
-                    </form>
-                </div>
+            <div class="form">
+                <form class="login mt-3" action="{{ route('loginSuper') }}" method="POST">
+                    @csrf
+                    
+                    @if (Session::has('success'))
+                    <div class="alert alert-success">{{ Session::get('success') }}</div>
+                    @endif
+                    @if (Session::has('error'))
+                    <div class="alert alert-danger">{{ Session::get('error') }}</div>
+                    @endif
+         
+                    <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+                    <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+         
+                    <input type="password" name="password" placeholder="Password">
+         
+                    <button type="submit">Login</button>
+                </form>
+            </div>
            </div>
         </div>
     </div>

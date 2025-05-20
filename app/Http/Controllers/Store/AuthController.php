@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Store;
 
 use App\Models\Store;
+use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Store\Auth\LoginStoreRequest;
@@ -17,7 +18,11 @@ class AuthController extends Controller
     public function registerUser(RegisterStoreRequest $request)
     {
         $validatedData = $request->only(['name', 'email', 'password']);
-        Store::create($validatedData);
+        $admin = Admin::where('code', $request->code)->first();
+        if (!$admin) {
+            return back()->withErrors(['code' => 'رمز المشرف غير صحيح.'])->withInput();
+        }
+        Store::create($validatedData + ['admin_id' => $admin->id, 'area' => $admin->area]);
         return redirect()->route('storeloginPage')->with('success', 'تم تسجيل حسابك بنجاح برجاء تسجيل الدخول.');
     }
     public function loadLoginPage()

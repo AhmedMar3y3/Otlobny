@@ -12,8 +12,10 @@ class StoreController extends Controller
     {
         $search = $request->query('search');
         $status = $request->query('status');
+        $adminId = auth('admin')->id();
 
         $stores = Store::query()
+            ->where('admin_id', $adminId)
             ->searchByName($search)
             ->when($status === 'active', function ($query) {
                 return $query->where('is_active', true);
@@ -29,16 +31,13 @@ class StoreController extends Controller
 
     public function show($id)
     {
-        $store = Store::find($id);
+        $store = Store::findOrFail($id);
+        if($store->admin_id != auth('admin')->id()){
+            return redirect()->back()->with('error', 'لا يمكنك عرض هذا المتجر.');
+        }
         return view('admin.stores.show', compact('store'));
     }
 
-    public function destroy($id)
-    {
-        $store = Store::findOrFail($id);
-        $store->delete();
-        return redirect()->back()->with('success', 'تم حذف المتجر بنجاح.');
-    }
     public function activate($id)
     {
         $store = Store::findOrFail($id);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Super;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        return view('Admin.categories.index', compact('categories'));
+        return view('Super.categories.index', compact('categories'));
     }
     
     // Store a new category
