@@ -38,7 +38,7 @@ Route::get('/closest-stores',     [HomeController::class, 'closestStores']);
 
 // stores routes //
 Route::get('/stores/{categoryId}',  [StoreController::class, 'getStoreByCategory']);
-Route::get('/best-stores',          [StoreController::class, 'bestStores']);
+Route::get('/best-stores/{categoryId}',[StoreController::class, 'bestStores']);
 Route::get('/store/{storeId}',      [StoreController::class, 'getStoreById']);
 Route::get('/products/{categoryId}',[StoreController::class, 'getProductsByCategory']);
 Route::get('/product/{productId}',  [StoreController::class, 'productById']);

@@ -19,13 +19,13 @@ class StoreController extends Controller
     public function getStoreByCategory($categoryId)
     {
         $stores = Store::active()->where('category_id', $categoryId)
-        ->searchByName(request()->input('name'))->get(['id', 'name', 'image']);
+            ->searchByName(request()->input('name'))->get(['id', 'name', 'image']);
         return $this->successWithDataResponse(StoresByCategoryResource::collection($stores));
     }
 
-    public function bestStores()
+    public function bestStores($categoryId)
     {
-        $stores = Store::active()->orderBy('rating', 'desc')->take(10)->get();
+        $stores = Store::active()->where('category_id', $categoryId)->orderBy('rating', 'desc')->take(10)->get();
         return $this->successWithDataResponse(BestStoresResource::collection($stores));
     }
 
@@ -37,7 +37,7 @@ class StoreController extends Controller
 
     public function getProductsByCategory($categoryId)
     {
-        $products = Product::active()->where('product_category_id', $categoryId)->get(['id','name','image','price']);
+        $products = Product::active()->where('product_category_id', $categoryId)->get(['id', 'name', 'image', 'price']);
         return $this->successWithDataResponse(ProductResource::collection($products));
     }
 
@@ -52,7 +52,7 @@ class StoreController extends Controller
 
     public function frequentProducts()
     {
-        $products = Product::active()->where('is_frequent', true)->get(['id','name','image','price']);
+        $products = Product::active()->where('is_frequent', true)->get(['id', 'name', 'image', 'price']);
         return $this->successWithDataResponse(ProductResource::collection($products));
     }
 }
