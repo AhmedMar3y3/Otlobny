@@ -26,7 +26,7 @@ class StoreController extends Controller
             ->select(['id', 'name', 'rating', 'is_active'])
             ->paginate(15);
 
-        return view('admin.stores.index', compact('stores', 'search', 'status'));
+        return view('Admin.stores.index', compact('stores', 'search', 'status'));
     }
 
     public function show($id)
@@ -35,7 +35,7 @@ class StoreController extends Controller
         if($store->admin_id != auth('admin')->id()){
             return redirect()->back()->with('error', 'لا يمكنك عرض هذا المتجر.');
         }
-        return view('admin.stores.show', compact('store'));
+        return view('Admin.stores.show', compact('store'));
     }
 
     public function activate($id)
