@@ -56,13 +56,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/reviews/{storeId}',[ReviewController::class, 'getStoreReviews']);
 
     // profile routes //
-    Route::get('/get-profile',      [ProfileController::class, 'getProfile']);
-    Route::post('/update-profile',  [ProfileController::class, 'updateProfile']);
-    Route::post('/delete-account',  [ProfileController::class, 'deleteAccount']);
-    Route::post('/change-password', [ProfileController::class, 'changePassword']);
-    Route::post('/update-location', [ProfileController::class, 'updateLocation']);
-    Route::get('/export-code',      [ProfileController::class, 'exportReferralCode']);
-    Route::post('/enable-notifications', [ProfileController::class, 'enableNotifications']);
+    Route::get('/get-profile',          [ProfileController::class, 'getProfile']);
+    Route::post('/update-profile',      [ProfileController::class, 'updateProfile']);
+    Route::post('/delete-account',      [ProfileController::class, 'deleteAccount']);
+    Route::post('/change-password',     [ProfileController::class, 'changePassword']);
+    Route::post('/update-location',     [ProfileController::class, 'updateLocation']);
+    Route::get('/export-code',          [ProfileController::class, 'exportReferralCode']);
+    Route::post('/enable-notifications',[ProfileController::class, 'enableNotifications']);
+    Route::get('/completed-orders',     [ProfileController::class, 'myCompletedOrders']);
+    Route::get('/pending-orders',       [ProfileController::class, 'myPendingOrders']);
 
     // cart routes //
     Route::post('/add-to-cart'              ,[CartController::class , 'addToCart']);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Enums\OrderStatus;
+use App\Http\Resources\Api\User\Order\Profile\OrdersResource;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -76,5 +78,22 @@ class ProfileController extends Controller
     {
         Auth::user()->update($request->validated() + ['is_notify' => true]);
         return $this->successResponse('تم تفعيل الاشعارات بنجاح');
+    }
+
+    public function myCompletedOrders()
+    {
+        $orders = auth()->user()->orders()->where('status', OrderStatus::DELIVERED->value)->get();
+        return $this->successWithDataResponse(OrdersResource::collection($orders));
+    }
+
+    public function myPendingOrders()
+    {
+        $orders = auth()->user()->orders()->whereIn('status', [
+            OrderStatus::WAITING->value,
+            OrderStatus::PREPARING->value,
+            OrderStatus::SHIPPING->value
+        ])->get();
+
+        return $this->successWithDataResponse(OrdersResource::collection($orders));
     }
 }

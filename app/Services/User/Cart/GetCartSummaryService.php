@@ -15,12 +15,12 @@ class GetCartSummaryService
 
         return [
             'cart_items'    => CartItemsResource::collection($items),
-            'cart_prices'   => $this->getCartPricesSummary($items),
+            'cart_prices'   => $this->getCartPricesSummary($items, $user->addresses->first()),
             'currency'      => 'ج.م',
         ];
     }
 
-    public function getCartPricesSummary($items)
+    public function getCartPricesSummary($items, $addressData)
     {
         if ($items->isEmpty()) {
             return [
@@ -37,10 +37,8 @@ class GetCartSummaryService
         $storeId = $items->first()->product->store_id;
         $store = Store::select('id', 'lat', 'lng')->find($storeId);
 
-        $user = auth()->user();
-
         $distanceService = new DistanceCalculatorService();
-        $distance = $distanceService->calculateDistance($user->lat, $user->lng, $store->lat, $store->lng);
+        $distance = $distanceService->calculateDistance($addressData['lat'], $addressData['lng'], $store->lat, $store->lng);
         $deliveryPricePerKm = Setting::where('key', 'delivery_price_per_km')->value('value');
         $deliveryPrice = $distance * $deliveryPricePerKm;
 

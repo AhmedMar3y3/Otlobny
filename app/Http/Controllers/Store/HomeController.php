@@ -13,13 +13,16 @@ class HomeController extends Controller
 {
     public function stats()
     {
-        $orders = Order::count();
+        $orders = Order::where('store_id', Auth::guard('store')->id())
+            ->count();
         $products = Product::where('store_id', Auth::guard('store')->id())->count();
         $categories = ProductCategory::where('store_id', Auth::guard('store')->id())->count();
         $last7DaysOrders = collect();
         for ($i = 6; $i >= 0; $i--) {
             $date = Carbon::now()->subDays($i)->toDateString();
-            $orderCount = Order::whereDate('created_at', $date)->count();
+            $orderCount = Order::whereDate('created_at', $date)
+                ->where('store_id', Auth::guard('store')->id())
+                ->count();
             $last7DaysOrders->put($date, $orderCount);
         }
         return view('Store.dashboard', compact('products', 'categories', 'orders', 'last7DaysOrders'));

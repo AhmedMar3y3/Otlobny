@@ -18,21 +18,14 @@ class Delegate extends Authenticatable
         'first_name',
         'last_name',
         'phone',
-        'country_code',
         'is_active',
         'email',
         'image',
         'password',
         'code',
-        'code_expire',
         'is_verified',
         'admin_code',
         'fcm_token',
-        'lat',
-        'lng',
-        'map_desc',
-        'title',
-        'completed_info',
         'birth_date',
     ];
 
@@ -51,17 +44,8 @@ class Delegate extends Authenticatable
         'code_expire' => 'datetime',
         'is_active' => 'boolean',
         'is_verified' => 'boolean',
+        'password' => 'hashed',
     ];
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
-
-    public function isCodeExpired()
-    {
-        return $this->code_expire && now()->gt($this->code_expire);
-    }
 
 
     public function markAsVerified()
@@ -69,7 +53,6 @@ class Delegate extends Authenticatable
         $this->update([
             'is_active' => true,
             'code' => null,
-            'code_expire' => null,
         ]);
     }
 
@@ -78,7 +61,6 @@ class Delegate extends Authenticatable
         $this->update([
             'password' => $password,
             'code' => null,
-            'code_expire' => null,
             'is_verified' => false,
         ]);
     }
@@ -87,7 +69,6 @@ class Delegate extends Authenticatable
     {
         $this->update([
             'code' => '123456',
-            'code_expire' => now()->addMinutes(1),
         ]);
 
         // (new SendVerificationCodeService())->sendCodeToUser($this);
@@ -107,21 +88,6 @@ class Delegate extends Authenticatable
     public function verifyPassword(string $password): bool
     {
         return Hash::check($password, $this->password);
-    }
-
-    public function updateLocation($data): void
-    {
-        $this->update($data + ['completed_info' => true]);
-    
-        $this->update(
-            ['title' => 'default'],
-            [
-                'lat'      => $data['lat'],
-                'lng'      => $data['lng'],
-                'map_desc' => $data['map_desc'],
-                'title'    => 'default',
-            ]
-        );
     }
 
     public function orders()

@@ -42,9 +42,6 @@ class AuthController extends Controller
             return $this->failureResponse('كود غير صحيح');
         }
 
-        if ($delegate->isCodeExpired()) {
-            return $this->failureResponse('كود منتهي الصلاحية');
-        }
 
         $delegate->markAsVerified();
         return $this->successWithDataResponse(DelegateResource::make($delegate)->setToken($delegate->login()));
@@ -60,10 +57,6 @@ class AuthController extends Controller
             return $this->failureResponse('المستخدم غير موجود');
         }
 
-        if (!$delegate->isCodeExpired()) {
-            return $this->failureResponse('لم تمر دقيقة بعد');
-        }
-
         $delegate->sendVerificationCode();
         return $this->successResponse();
     }
@@ -71,7 +64,6 @@ class AuthController extends Controller
     public function setLocation(StoreLocationRequest $request)
     {
         $delegate = Auth('delegate')->user();
-        $delegate->updateLocation($request->validated());
         return $this->successWithDataResponse(DelegateResource::make($delegate)->setToken(ltrim($request->header('authorization'), 'Bearer ')));
     }
 
@@ -85,7 +77,7 @@ class AuthController extends Controller
         }
 
         if (!$delegate->is_active) {
-            return $this->inactivedelegateResponse(new delegateResource($delegate));
+            return $this->inactiveUserResponse(new delegateResource($delegate));
         }
 
         $token = $delegate->login();
@@ -116,10 +108,6 @@ class AuthController extends Controller
 
         if ($delegate->code !== $request->code) {
             return $this->failureResponse('كود غير صحيح');
-        }
-
-        if ($delegate->isCodeExpired()) {
-            return $this->failureResponse('كود منتهي الصلاحية');
         }
 
         $delegate->update([

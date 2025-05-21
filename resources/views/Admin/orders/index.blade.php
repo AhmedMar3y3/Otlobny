@@ -11,6 +11,26 @@
     <div class="alert alert-danger">{{ Session::get('error') }}</div>
     @endif
 
+    <!-- Status Filter Form -->
+    <form method="GET" action="{{ route('admin.orders.index') }}" class="mb-4">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="status" class="form-label">حالة الطلب</label>
+                <select name="status" id="status" class="form-select">
+                    <option value="" {{ $status === null ? 'selected' : '' }}>الكل</option>
+                    @foreach (\App\Enums\OrderStatus::cases() as $enumStatus)
+                        <option value="{{ $enumStatus->value }}" {{ $status === $enumStatus->value ? 'selected' : '' }}>
+                            {{ __('order.' . $enumStatus->name) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 mb-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">تصفية</button>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -81,23 +101,7 @@
         </tbody>
     </table>
     
-    {{ $orders->links() }}
-      <!-- Pagination Buttons -->
-      <div class="d-flex justify-content-between mt-4">
-        <!-- Previous Page Button -->
-        @if($orders->onFirstPage())
-        <span class="btn btn-secondary btn-rounded disabled">السابق</span>
-        @else
-        <a href="{{ $orders->previousPageUrl() }}" class="btn btn-primary btn-rounded">السابق</a>
-        @endif
-
-        <!-- Next Page Button -->
-        @if($orders->hasMorePages())
-        <a href="{{ $orders->nextPageUrl() }}" class="btn btn-primary btn-rounded">التالي</a>
-        @else
-        <span class="btn btn-secondary btn-rounded disabled">التالي</span>
-        @endif
-    </div>
+    {{ $orders->appends(['status' => $status])->links() }}
 </div>
 @endsection
 

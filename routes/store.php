@@ -28,7 +28,7 @@ Route::prefix('store')->group(function () {
         // order routes //
         Route::get('/orders',                  [OrderController::class, 'index'])->name('store.orders.index');
         Route::get('/orders/{id}',             [OrderController::class, 'show'])->name('store.orders.show');
-        Route::put('/assign-delegate/{order}', [OrderController::class, 'assignDelegate'])->name('store.orders.assign');
+        Route::post('/mark-waiting/{id}',      [OrderController::class, 'markAsWaiting'])->name('store.orders.markAsWaiting');
 
         // category routes //
         Route::get('/category',         [CategoryController::class, 'index'])->name('store.categories.index');
@@ -44,5 +44,6 @@ Route::prefix('store')->group(function () {
         Route::get('/edit-product/{id}',     [ProductController::class, 'edit'])->name('store.products.edit');
         Route::put('/update-product/{id}',   [ProductController::class, 'update'])->name('store.products.update');
         Route::delete('/delete-product/{id}',[ProductController::class, 'destroy'])->name('store.products.destroy');
+        Route::post('/toggle-product/{id}',  [ProductController::class, 'toggleActive'])->name('store.products.toggleActive');
     });
 });

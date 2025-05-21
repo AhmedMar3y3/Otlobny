@@ -6,11 +6,11 @@ use App\Services\User\Cart\GetCartSummaryService;
 
 class OrderPricesService
 {
-    public function getOrderPrices($user){
+    public function getOrderPrices($user, $addressData){
         $cartSummary = new GetCartSummaryService();
         
         $items = $cartSummary->getCartItemsSummary($user);
 
-        return $cartSummary->getCartPricesSummary($items);
+        return $cartSummary->getCartPricesSummary($items, $addressData);
     }
 }

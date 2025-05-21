@@ -46,7 +46,10 @@ class Product extends Model
     {
         return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
-
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 
     public function orderItems()
     {
@@ -65,5 +68,10 @@ class Product extends Model
     public function scopeSearchByName($query, $name)
     {
         return $query->where('name', 'like', '%' . $name . '%');
+    }
+
+    public function hasOrders()
+    {
+        return $this->orderItems()->exists();
     }
 }

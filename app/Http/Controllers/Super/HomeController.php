@@ -6,8 +6,8 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Admin;
+use App\Models\Super;
 use App\Models\Store;
-use App\Models\Product;
 use App\Models\Delegate;
 use App\Http\Controllers\Controller;
 
@@ -17,8 +17,8 @@ class HomeController extends Controller
     {
         $users = User::count();
         $orders = Order::count();
-        $products = Product::count();
-        $additions = Store::count();
+        $code = Super::where('id', auth('super')->id())->first()->code;
+        $stores = Store::count();
         $admins = Admin::count();
         $delegates = Delegate::where('is_active', 1)->count();
         $last7DaysUsers = collect();
@@ -28,8 +28,6 @@ class HomeController extends Controller
             $last7DaysUsers->put($date, $userCount);
         }
 
-
-
-        return view('Super.dashboard', compact('products', 'admins', 'delegates', 'users', 'orders', 'additions', 'last7DaysUsers'));
+        return view('Super.dashboard', compact('code', 'admins', 'delegates', 'users', 'orders', 'stores', 'last7DaysUsers'));
     }
 }

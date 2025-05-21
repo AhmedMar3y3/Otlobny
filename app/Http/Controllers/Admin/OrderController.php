@@ -4,27 +4,39 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use App\Models\Delegate;
-use App\Enums\OrderPayTypes;
-use App\Enums\OrderPayStatus;
+use App\Enums\OrderStatus;
+use Illuminate\Http\Request;
+use App\Services\Admin\OrderService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\AssignToDelegateRequest;
 
 class OrderController extends Controller
 {
-    public function index()
+    protected $orderService;
+
+    public function __construct(OrderService $orderService)
     {
-        $orders = Order::with(['user', 'delegate'])
-            ->where(function ($query) {
-                $query->where('pay_type', OrderPayTypes::ONLINE->value)->where('pay_status', OrderPayStatus::PAIED->value);
-            })
-            ->orWhere('pay_type', OrderPayTypes::CASH->value)
-            ->orderBy('status', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $this->orderService = $orderService;
+    }
+
+    public function index(Request $request)
+    {
+        $status = $request->query('status');
+        if ($status !== null && $status !== '') {
+            $status = (int) $status;
+            $enumStatus = OrderStatus::tryFrom($status);
+            if ($enumStatus === null) {
+                $status = null;
+            }
+        } else {
+            $status = null;
+        }
+
+        $orders = $this->orderService->getFilteredOrders($status);
 
         $delegates = Delegate::where('is_active', true)->get();
 
-        return view("Admin.orders.index", compact("orders", "delegates"));
+        return view("Admin.orders.index", compact("orders", "delegates", "status"));
     }
 
     public function show($id)
@@ -32,20 +44,22 @@ class OrderController extends Controller
         $order = Order::with([
             'items',
             'items.product',
-            'items.additions',
             'user:id,first_name,last_name,phone,image',
-            'delegate:id,first_name,last_name,phone,image'
+            'delegate:id,first_name,last_name,phone,image',
+            'store.category'
         ])->findOrFail($id);
+
+        $adminId = auth('admin')->id();
+        if ($order->store->admin_id !== $adminId) {
+            abort(403, 'Unauthorized');
+        }
 
         return view("Admin.orders.show", compact("order"));
     }
 
     public function assignDelegate(AssignToDelegateRequest $request, Order $order)
     {
-        $order->update([
-            'delegate_id' => $request->delegate_id,
-        ]);
-
+        $order->update($request->validated());
         return redirect()->back()->with('success', 'تم تعيين المندوب بنجاح');
     }
 }

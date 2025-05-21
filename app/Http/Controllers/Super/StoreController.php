@@ -52,6 +52,7 @@ class StoreController extends Controller
 
         $store = Store::findOrFail($id);
         $store->admin_id = $request->input('admin_id');
+        $store->area = Admin::findOrFail($request->input('admin_id'))->area;
         $store->save();
         return redirect()->back()->with('success', 'تم تغيير المسؤول بنجاح.');
     }

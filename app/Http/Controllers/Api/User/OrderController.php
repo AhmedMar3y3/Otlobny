@@ -30,12 +30,12 @@ class OrderController extends Controller
             DB::beginTransaction();
             $addressData = $this->getAddressData($request->address_id);
 
-            $prices = (new OrderPricesService())->getOrderPrices($user);
+            $prices = (new OrderPricesService())->getOrderPrices($user, $addressData);
 
             $order = Order::create($addressData + $prices + [
                 'user_id' => $user->id,
                 'pay_type' => $request->pay_type,
-                // 'store_id' => $user->carts()->first()->product->store_id,
+                'store_id' => $user->carts()->first()->product->store_id,
             ]);
 
             (new OrderItemsService())->createOrderItems($order, $user);
@@ -70,4 +70,12 @@ class OrderController extends Controller
         $order->load(['items', 'items.product']);
         return $this->successWithDataResponse(new OrderResource($order));
     }
+
+    // public function getOrderLocation(Order $order)
+    // {
+    //     return $this->successWithDataResponse([
+    //         'lat' => $order->delegate()->lat,
+    //         'lng' => $order->delegate()->lng,
+    //     ]);
+    // }
 }
