@@ -2,51 +2,51 @@
 @section('main')
 <div class="row" dir="rtl">
   <div class="col-sm-4 grid-margin">
-    <div class="card">
+    <div class="card shadow" style="background-color: #0F172A; box-shadow: 0 8px 32px rgba(15,23,42,0.30);">
       <div class="card-body">
-        <h3 style="color: black">{{ __('admin.categories') }}</h3>
+        <h3>{{ __('admin.categories') }}</h3>
         <div class="row">
           <div class="col-8 col-sm-12 col-xl-8 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h2 class="mb-0" style="color: black">{{ $categories }}</h2>
+              <h2 class="mb-0">{{ $categories }}</h2>
             </div>
           </div>
           <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-            <i class="icon-lg fa fa-tags text-primary ml-auto"></i>
+            <i class="icon-lg fa fa-tags" style="color: #fff;"></i>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col-sm-4 grid-margin">
-    <div class="card">
+    <div class="card shadow" style="background-color: #0F172A; box-shadow: 0 8px 32px rgba(15,23,42,0.30);">
       <div class="card-body">
-        <h3 style="color: black">{{ __('admin.products') }}</h3>
+        <h3>{{ __('admin.products') }}</h3>
         <div class="row">
           <div class="col-8 col-sm-12 col-xl-8 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h2 class="mb-0" style="color: black">{{ $products }}</h2>
+              <h2 class="mb-0">{{ $products }}</h2>
             </div>
           </div>
           <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-            <i class="icon-lg fa fa-cubes text-danger ml-auto"></i>
+            <i class="icon-lg fa fa-cubes" style="color: #fff;"></i>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col-sm-4 grid-margin">
-    <div class="card">
+    <div class="card shadow" style="background-color: #0F172A; box-shadow: 0 8px 128px rgba(15,23,42,0.30);">
       <div class="card-body">
-        <h3 style="color: black">{{ __('admin.orders') }}</h3>
+        <h3>{{ __('admin.orders') }}</h3>
         <div class="row">
           <div class="col-8 col-sm-12 col-xl-8 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h2 class="mb-0" style="color: black">{{ $orders }}</h2>
+              <h2 class="mb-0">{{ $orders }}</h2>
             </div>
           </div>
           <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-            <i class="icon-lg fa fa-shopping-cart text-warning ml-auto"></i>
+            <i class="icon-lg fa fa-shopping-cart" style="color: #fff;"></i>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
 
     <!-- Chart Section -->
     <div class="col-12">
-        <div class="card">
+    <div class="card shadow" style="background-color: #0F172A; box-shadow: 0 8px 128px rgba(15,23,42,0.30);">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="card-title mb-0">{{ __('admin.new_orders') }}</h3>
