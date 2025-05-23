@@ -92,7 +92,7 @@
                                 </div>
                                 <!-- Category Image -->
                                 <div class="text-center">
-                                    <label for="">{{__('admin.image')}}</label>
+                                    <label for="" style="color: white">{{__('admin.image')}}</label>
                                     <div class="mb-3 d-flex justify-content-center align-items-center">
                                         <div id="imageContainer{{ $category->id }}" class="image-upload-square border">
                                             <img id="previewImage{{ $category->id }}" src="{{ $category->image }}" 
@@ -144,7 +144,7 @@
                     </div>
                     <!-- Category Image -->
                     <div class="text-center">
-                        <label for="">{{__('admin.image')}}</label>
+                        <label for="" style="color: white">{{__('admin.image')}}</label>
                         <div class="mb-3 d-flex justify-content-center align-items-center">
                             <div id="imageContainerCreate" class="image-upload-square border">
                             </div>

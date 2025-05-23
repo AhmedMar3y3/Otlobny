@@ -149,7 +149,7 @@
                         </div>
                     @else
                         <div class="text-center p-4">
-                            <h4>{{ __('admin.no_delegate') }}</h4>
+                            <h4 style="color: black">{{ __('admin.no_delegate') }}</h4>
                         </div>
                     @endif
                 </div>

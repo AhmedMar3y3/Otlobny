@@ -8,13 +8,13 @@
         color: #ffffff !important;
     }
 </style>
-<nav class="sidebar sidebar-offcanvas" id="sidebar" style="background: white">
+<nav class="sidebar sidebar-offcanvas" id="sidebar" style="background: #0F172A">
 
-    <ul class="sidebar-brand-wrapper d-lg-flex align-items-center justify-content-center fixed-top  "style="background: white">
+    <ul class="sidebar-brand-wrapper d-lg-flex align-items-center justify-content-center fixed-top  "style="background: #0F172A">
 
         <li class="nav-item dropdown me-5" style=" list-style-type: none;">
             <a class="nav-link " id="profileDropdown" href="#" data-bs-toggle="dropdown" >
-            <div class="navbar-profile d-flex gap-2" style="color: black">
+            <div class="navbar-profile d-flex gap-2" style="color: white">
                 
                 <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::guard('super')->user()->name }}</p>
                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>

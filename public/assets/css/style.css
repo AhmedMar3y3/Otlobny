@@ -8573,7 +8573,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
-  color: #000000;
+  color: #ffffff;
 }
 
 h1, .h1 {
@@ -10225,7 +10225,7 @@ progress {
 .table > :not(caption) > * > * {
   padding: 0.5rem 0.5rem;
   /* color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color))); */
-  color: #000000 !important;
+  color: #ffffff !important;
   background-color: var(--bs-table-bg);
   border-bottom-width: var(--bs-border-width);
   box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
@@ -10266,14 +10266,14 @@ progress {
 .table-striped > tbody > tr:nth-of-type(odd) > * {
   --bs-table-color-type: var(--bs-table-striped-color);
 
-  color: #000000 !important;
+  color: #ffffff !important;
   --bs-table-bg-type: var(--bs-table-striped-bg);
 }
 
 .table-striped-columns > :not(caption) > tr > :nth-child(even) {
     --bs-table-color-type: var(--bs-table-striped-color);
 
-  color: #000000 !important;
+  color: #ffffff !important;
   --bs-table-bg-type: var(--bs-table-striped-bg);
 }
 
@@ -10436,7 +10436,7 @@ progress {
 }
 .form-label {
   margin-bottom: 0.5rem;
-  color: black; /* Add this line */
+  color: white !important; /* Add this line */
 
 }
 
@@ -13955,7 +13955,7 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
   outline: 0;
 }
 .modal-content.modal-content {
-  background-color: #8f8f8f !important;
+  background-color: #0F172A !important;
 }
 
 .modal-backdrop {

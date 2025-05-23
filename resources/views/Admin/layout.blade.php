@@ -7,7 +7,7 @@
             <div class="container-fluid page-body-wrapper">
                 @include('Admin.partials.navbar')
                 <div class="main-panel" >
-                    <div class="content-wrapper" style="background-color: #8f8f8f">
+                    <div class="content-wrapper" style="background-color: #0F172A">
                         <main id="main" class="main" >
                             @yield('main')
                         </main>

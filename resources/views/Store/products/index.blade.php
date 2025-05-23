@@ -22,7 +22,7 @@
 
 @section('main')
     <div class="container text-end">
-        <h2 style="color: black">جميع المنتجات</h2>
+        <h2>جميع المنتجات</h2>
 
         <!-- Success/Error Messages -->
         @if (Session::has('success'))

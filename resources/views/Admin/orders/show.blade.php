@@ -202,7 +202,7 @@
                         </div>
                     @else
                         <div class="text-center p-4">
-                            <h4>{{ __('admin.unknown_or_deleted') }}</h4>
+                            <h4 style="color: black">{{ __('admin.unknown_or_deleted') }}</h4>
                         </div>
                     @endif
                 </div>
@@ -235,7 +235,7 @@
                         </div>
                     @else
                         <div class="text-center p-4">
-                            <h4>{{ __('admin.no_delegate') }}</h4>
+                            <h4 style="color: black">{{ __('admin.no_delegate') }}</h4>
                         </div>
                     @endif
                 </div>

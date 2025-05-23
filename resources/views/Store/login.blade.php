@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Login</title>
     <!-- Google Fonts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
@@ -14,6 +18,8 @@
         /* Colors */
         body {
             font-family: 'Asap', sans-serif;
+            background-color: #0F172A;
+
         }
 
         .login {
@@ -29,6 +35,7 @@
             transition: transform 300ms, box-shadow 300ms;
             box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
         }
+
         .login::before,
         .login::after {
             content: '';
@@ -68,7 +75,8 @@
             margin: 15px -10px;
         }
 
-        .login-btn, .register-btn {
+        .login-btn,
+        .register-btn {
             font-family: 'Asap', sans-serif;
             cursor: pointer;
             color: #fff;
@@ -106,6 +114,7 @@
             from {
                 transform: rotate(0);
             }
+
             to {
                 transform: rotate(360deg);
             }
@@ -119,24 +128,29 @@
             bottom: 10px;
             font-size: 12px;
         }
+
         .cover-image {
             width: 100%;
             height: 400px;
         }
+
         .cover-image img {
             width: 100%;
             height: 100%;
         }
+
         .line {
             width: 100%;
             position: absolute;
             height: 50px;
             bottom: 284px
         }
+
         .line img {
             width: 100%;
             height: 100%;
         }
+
         .form-title {
             position: absolute;
             left: 50%;
@@ -149,34 +163,36 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-           <div class="col-12 text-center">
-            <div class="form-title mb-4">
-                    <h2 style="font-weight:600; color:#2980b9; letter-spacing:1px; background:rgba(255,255,255,0.85); display:inline-block; padding:10px 30px; border-radius:8px; box-shadow:0 2px 8px rgba(41,128,185,0.08);">
-                        تسجيل دخول المحلات 
+            <div class="col-12 text-center">
+                <div class="form-title mb-4">
+                    <h2
+                        style="font-weight:600; color:#2980b9; letter-spacing:1px; background:rgba(255,255,255,0.85); display:inline-block; padding:10px 30px; border-radius:8px; box-shadow:0 2px 8px rgba(41,128,185,0.08);">
+                        تسجيل دخول المحلات
                     </h2>
                 </div>
-            <div class="form">
-                <form class="login mt-3" action="{{ route('loginStore') }}" method="POST">
-                    @csrf
-                    
-                    @if (Session::has('success'))
-                    <div class="alert alert-success">{{ Session::get('success') }}</div>
-                    @endif
-                    @if (Session::has('error'))
-                    <div class="alert alert-danger">{{ Session::get('error') }}</div>
-                    @endif
-         
-                    <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
-                    <span class="text-danger">@error('email'){{ $message }}@enderror</span>
-         
-                    <input type="password" name="password" placeholder="Password">
-         
-                    <button type="submit" class="login-btn">Login</button>
-                    <a href="{{ route('register') }}" class="register-btn">Register</a>
-                </form>
+                <div class="form">
+                    <form class="login mt-3" action="{{ route('loginStore') }}" method="POST">
+                        @csrf
+
+                        @if (Session::has('success'))
+                            <div class="alert alert-success">{{ Session::get('success') }}</div>
+                        @endif
+                        @if (Session::has('error'))
+                            <div class="alert alert-danger">{{ Session::get('error') }}</div>
+                        @endif
+
+                        <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+                        <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+
+                        <input type="password" name="password" placeholder="Password">
+
+                        <button type="submit" class="login-btn">Login</button>
+                        <a href="{{ route('register') }}" class="register-btn">Register</a>
+                    </form>
+                </div>
             </div>
-           </div>
         </div>
     </div>
 </body>
+
 </html>

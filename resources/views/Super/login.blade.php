@@ -15,6 +15,7 @@
         /* Colors */
 body {
     font-family: 'Asap', sans-serif;
+    background-color: #0F172A;
 }
 
 .login {
