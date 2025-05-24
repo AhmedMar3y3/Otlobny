@@ -25,6 +25,19 @@ class HomeController extends Controller
                 ->count();
             $last7DaysOrders->put($date, $orderCount);
         }
-        return view('Store.dashboard', compact('products', 'categories', 'orders', 'last7DaysOrders'));
+
+        $recentOrders = Order::where('store_id', Auth::guard('store')->id())
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+        return view('Store.dashboard', compact('products', 'categories', 'orders', 'last7DaysOrders', 'recentOrders'));
+    }
+
+    public function toggleOpenClose()
+    {
+        $store = Auth::guard('store')->user();
+        $store->is_open = !$store->is_open;
+        $store->save();
+        return redirect()->back()->with('success', 'تم تحديث حالة المتجر بنجاح.');
     }
 }

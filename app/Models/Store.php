@@ -25,7 +25,8 @@ class Store extends Authenticatable
         'lat',
         'lng',
         'admin_id',
-        'area'
+        'area',
+        'is_open'
     ];
 
     protected $hidden = [
@@ -35,6 +36,7 @@ class Store extends Authenticatable
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_open' => 'boolean',
         'password' => 'hashed',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -56,6 +58,11 @@ class Store extends Authenticatable
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeOpen($query)
+    {
+        return $query->where('is_open', true);
     }
     public function scopeSearchByName($query, $name)
     {

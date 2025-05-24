@@ -16,6 +16,7 @@ class BestStoresResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'is_open' => $this->is_open,
             'name' => $this->name,
             'image' => $this->image,
             'rating' => $this->rating,

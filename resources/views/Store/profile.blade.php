@@ -2,43 +2,170 @@
 
 @section('styles')
 <style>
+    .profile-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    .profile-header {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .profile-header h2 {
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .card {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 32px rgba(15,23,42,0.30);
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 1.2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .card-body {
+        padding: 2rem;
+        color: #fff;
+    }
+    
+    .form-label {
+        color: #fff !important;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control, .form-select {
+        background-color: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px;
+        padding: 0.8rem;
+        color: #fff;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        background-color: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.3);
+        color: #fff;
+        box-shadow: none;
+    }
+    
+    .form-control::placeholder {
+        color: rgba(255,255,255,0.5);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+        padding: 0.8rem 2rem;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(15,23,42,0.30);
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    }
+    
+    .alert {
+        border: none;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
     #map {
         height: 400px;
         width: 100%;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     }
-    .location-error {
-        color: red;
-        font-size: 0.9em;
-        margin-top: 5px;
-    }
+    
     .location-button {
-        margin-top: 10px;
-        cursor: pointer;
-        color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .location-button:hover {
+        color: rgba(255,255,255,0.8);
         text-decoration: underline;
     }
-    .location-button:hover {
-        color: #0056b3;
+    
+    .location-error {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 5px;
+        background-color: rgba(255,107,107,0.1);
     }
-     .form-label {
-        color: #000 !important;
+    
+    .profile-image-preview {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 1rem 0;
+        border: 3px solid rgba(255,255,255,0.2);
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .text-danger {
+        color: #ff6b6b !important;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
     }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 @endsection
 
 @section('main')
-<div class="container" style="direction: rtl;">
-    <h2>الملف الشخصي</h2>
+<div class="profile-container" style="direction: rtl;">
+    <div class="profile-header">
+        <h2>الملف الشخصي</h2>
+    </div>
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     <!-- Profile Update Form -->
-    <div class="card mb-4">
+    <div class="card">
         <div class="card-header">تحديث الملف الشخصي</div>
         <div class="card-body">
             <form action="{{ route('store.profile.update') }}" method="POST" enctype="multipart/form-data">
@@ -46,7 +173,7 @@
                 @method('PUT')
 
                 <!-- Name -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="name" class="form-label">الاسم</label>
                     <input type="text" name="name" class="form-control" id="name" value="{{ $user->name }}">
                     @error('name')
@@ -55,7 +182,7 @@
                 </div>
 
                 <!-- Email -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="email" class="form-label">البريد الإلكتروني</label>
                     <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
                     @error('email')
@@ -64,10 +191,10 @@
                 </div>
 
                 <!-- Image -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="image" class="form-label">الصورة</label>
                     @if ($user->image)
-                        <img src="{{ asset($user->image) }}" alt="" style="width: 40px; height: 40px;">
+                        <img src="{{ asset($user->image) }}" alt="" class="profile-image-preview">
                     @endif
                     <input type="file" name="image" class="form-control" id="image">
                     @error('image')
@@ -76,7 +203,7 @@
                 </div>
 
                 <!-- Category Selection -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="category_id" class="form-label">الفئة</label>
                     <select name="category_id" class="form-select" id="category_id">
                         <option value="">اختر فئة</option>
@@ -92,7 +219,7 @@
                 </div>
 
                 <!-- Delivery Time Min -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="delivery_time_min" class="form-label">أقل وقت للتوصيل (بالدقائق)</label>
                     <input type="number" name="delivery_time_min" class="form-control" id="delivery_time_min" value="{{ $user->delivery_time_min }}">
                     @error('delivery_time_min')
@@ -101,7 +228,7 @@
                 </div>
 
                 <!-- Delivery Time Max -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="delivery_time_max" class="form-label">أقصى وقت للتوصيل (بالدقائق)</label>
                     <input type="number" name="delivery_time_max" class="form-control" id="delivery_time_max" value="{{ $user->delivery_time_max }}">
                     @error('delivery_time_max')
@@ -110,7 +237,7 @@
                 </div>
 
                 <!-- Location Selection -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label class="form-label">الموقع</label>
                     <p>انقر على الخريطة لتحديد موقعك أو <span class="location-button" id="use-device-location">استخدام موقع جهازك الحالي</span></p>
                     <div id="map"></div>
@@ -138,7 +265,7 @@
                 @csrf
 
                 <!-- Current Password -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="current_password" class="form-label">كلمة المرور الحالية</label>
                     <input type="password" name="current_password" class="form-control" id="current_password">
                     @error('current_password')
@@ -147,7 +274,7 @@
                 </div>
 
                 <!-- New Password -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="password" class="form-label">كلمة المرور الجديدة</label>
                     <input type="password" name="password" class="form-control" id="password">
                     @error('password')
@@ -156,7 +283,7 @@
                 </div>
 
                 <!-- Password Confirmation -->
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="password_confirmation" class="form-label">تأكيد كلمة المرور</label>
                     <input type="password" name="password_confirmation" class="form-control" id="password_confirmation">
                 </div>

@@ -16,6 +16,7 @@ class DetailedStoreResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'is_open' => $this->is_open,
             'name' => $this->name,
             'image' => $this->image,
             'rating' => $this->rating,
@@ -24,26 +25,26 @@ class DetailedStoreResource extends JsonResource
             'delivery_time_max' => $this->delivery_time_max,
             'categories_names' => $this->productCategories
                 ? $this->productCategories
-                    ->filter(function ($category) {
-                        return $category->products && $category->products->count() > 0;
-                    })
-                    ->take(3)
-                    ->pluck('title')
-                    ->toArray()
+                ->filter(function ($category) {
+                    return $category->products && $category->products->count() > 0;
+                })
+                ->take(3)
+                ->pluck('title')
+                ->toArray()
                 : [],
             'categories' => $this->productCategories
                 ? $this->productCategories
-                    ->filter(function ($category) {
-                        return $category->products && $category->products->count() > 0;
-                    })
-                    ->map(function ($category) {
-                        return [
-                            'category_id' => $category->id,
-                            'category_title' => $category->title,
-                        ];
-                    })
-                    ->values()
-                    ->toArray()
+                ->filter(function ($category) {
+                    return $category->products && $category->products->count() > 0;
+                })
+                ->map(function ($category) {
+                    return [
+                        'category_id' => $category->id,
+                        'category_title' => $category->title,
+                    ];
+                })
+                ->values()
+                ->toArray()
                 : [],
         ];
     }

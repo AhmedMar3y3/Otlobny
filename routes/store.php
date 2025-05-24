@@ -16,8 +16,9 @@ Route::prefix('store')->group(function () {
     Route::post('/register-user', [AuthController::class, 'registerUser'])->name('registerUser');
 
     //protected routes
-    Route::get('/dashboard', [HomeController::class, 'stats'])->name('store.dashboard');
     Route::middleware(['auth.store'])->group(function () {
+        Route::get('/dashboard', [HomeController::class, 'stats'])->name('store.dashboard');
+        Route::post('/toggle-open-close', [HomeController::class, 'toggleOpenClose'])->name('store.toggleOpenClose');
         Route::post('/logout',  [AuthController::class, 'logout'])->name('store.logout');
 
         // profile routes //
