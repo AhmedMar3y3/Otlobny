@@ -250,7 +250,7 @@
 
                 <div class="mb-3">
                     <label for="description" class="form-label">الوصف</label>
-                    <textarea name="description" class="form-control text-end" id="description" rows="4">{{ $product->description }}</textarea>
+                    <textarea name="description" class="form-control text-end" id="description" rows="4" required>{{ $product->description }}</textarea>
                     <span class="text-danger">@error('description'){{ $message }}@enderror</span>
                 </div>
 

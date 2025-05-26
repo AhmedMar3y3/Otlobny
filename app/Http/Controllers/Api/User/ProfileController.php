@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Enums\OrderStatus;
-use App\Http\Resources\Api\User\Order\Profile\OrdersResource;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +10,7 @@ use App\Http\Resources\Api\User\ProfileResource;
 use App\Http\Requests\Api\User\LocationRequest;
 use App\Http\Requests\Api\User\Profile\DeleteAccountRequest;
 use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
+use App\Http\Resources\Api\User\Order\Profile\OrdersResource;
 use App\Http\Requests\Api\User\Profile\EnableNotificationsRequest;
 
 
@@ -18,7 +18,6 @@ use App\Http\Requests\Api\User\Profile\ChangePasswordRequest;
 
 class ProfileController extends Controller
 {
-    //TODO: make myorders function
     use HttpResponses;
     public function getProfile()
     {

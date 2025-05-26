@@ -25,7 +25,7 @@ class StoreProductRequest extends BaseRequest
 
             'description' => 
             [
-                'nullable',
+                'required',
                  'string',
             ],
             'price' => 
