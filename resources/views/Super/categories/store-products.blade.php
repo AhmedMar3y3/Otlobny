@@ -1,4 +1,4 @@
-@extends('Admin.layout')
+@extends('Super.layout')
 
 @section('styles')
 <style>
@@ -80,22 +80,6 @@
         color: rgba(255,255,255,0.5);
     }
     
-    .btn-primary {
-        background: linear-gradient(135deg, #334155 0%, #0F172A 100%);
-        border: none;
-        border-radius: 8px;
-        padding: 0.8rem 2rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(15,23,42,0.10);
-    }
-    
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #0F172A 0%, #334155 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(15,23,42,0.20);
-    }
-    
     .table-container {
         background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
         border-radius: 15px;
@@ -133,11 +117,16 @@
         transform: translateY(-2px);
     }
     
+    .btn-group {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
     .btn-info {
         background: rgba(56,189,248,0.1);
         border: 1px solid rgba(56,189,248,0.2);
         color: #38bdf8;
-        padding: 0.5rem;
+        padding: 0.5rem 1rem;
         border-radius: 8px;
         transition: all 0.3s ease;
     }
@@ -147,41 +136,69 @@
         transform: translateY(-2px);
     }
     
-    .btn-success {
+    .btn-danger {
+        background: rgba(239,68,68,0.1);
+        border: 1px solid rgba(239,68,68,0.2);
+        color: #ef4444;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-danger:hover {
+        background: rgba(239,68,68,0.2);
+        transform: translateY(-2px);
+    }
+    
+    .badge {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    
+    .badge-success {
         background: rgba(16,185,129,0.1);
-        border: 1px solid rgba(16,185,129,0.2);
         color: #10b981;
-        padding: 0.5rem 1rem;
+        border: 1px solid rgba(16,185,129,0.2);
+    }
+    
+    .badge-danger {
+        background: rgba(239,68,68,0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239,68,68,0.2);
+    }
+    
+    .product-image {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
         border-radius: 8px;
-        transition: all 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.1);
     }
     
-    .btn-success:hover {
-        background: rgba(16,185,129,0.2);
-        transform: translateY(-2px);
+    .modal-content {
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 15px;
     }
     
-    .btn-secondary {
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
+    .modal-header {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
         color: #fff;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
     }
     
-    .btn-secondary:hover {
-        background: rgba(255,255,255,0.2);
-        transform: translateY(-2px);
+    .modal-footer {
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
     
-    .rating-badge {
-        background: rgba(255,193,7,0.1);
-        color: #ffc107;
-        padding: 0.3rem 1rem;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.9rem;
+    .close {
+        color: #fff;
+        text-shadow: none;
+        opacity: 0.7;
+    }
+    
+    .close:hover {
+        opacity: 1;
     }
     
     .pagination {
@@ -231,7 +248,7 @@
 
 @section('main')
 <div class="container text-end" style="direction: rtl;">
-    <div class="page-header">إدارة المتاجر</div>
+    <div class="page-header">منتجات {{ $store->name }}</div>
     
     @if (Session::has('success'))
     <div class="alert alert-success">
@@ -248,20 +265,12 @@
 
     <!-- Search and Filter Form -->
     <div class="filter-card">
-        <form method="GET" action="{{ route('admin.stores.index') }}">
+        <form method="GET" action="{{ route('super.categories.store-products', [$category->id, $store->id]) }}">
             <div class="row align-items-end">
                 <div class="col-md-6 mb-3">
                     <label for="search" class="form-label">البحث حسب الاسم</label>
                     <input type="text" name="search" id="search" class="form-control" 
-                           value="{{ $search ?? '' }}" placeholder="أدخل اسم المتجر">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="status" class="form-label">الحالة</label>
-                    <select name="status" id="status" class="form-select">
-                        <option value="all" {{ ($status ?? 'all') === 'all' ? 'selected' : '' }}>الكل</option>
-                        <option value="active" {{ ($status ?? '') === 'active' ? 'selected' : '' }}>نشط</option>
-                        <option value="inactive" {{ ($status ?? '') === 'inactive' ? 'selected' : '' }}>غير نشط</option>
-                    </select>
+                           value="{{ request('search') }}" placeholder="أدخل اسم المنتج">
                 </div>
                 <div class="col-md-2 mb-3">
                     <button type="submit" class="btn btn-primary w-100">
@@ -273,56 +282,59 @@
         </form>
     </div>
 
-    <!-- Store Table -->
+    <!-- Products Table -->
     <div class="table-container">
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>الإجراءات</th>
-                        <th>الحالة</th>
-                        <th>التقييم</th>
-                        <th>الاسم</th>
                         <th>#</th>
+                        <th>الصورة</th>
+                        <th>اسم المنتج</th>
+                        <th>السعر</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($stores as $store)
+                    @forelse($products as $product)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
-                            <a href="{{ route('admin.stores.show', $store->id) }}" class="btn btn-info" title="عرض التفاصيل">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            @if($store->whatsapp)
-                        <a href="https://wa.me/{{ $store->whatsapp }}" target="_blank" class="btn btn-action" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #fff; border: none;">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        @endif
+                            @if($product->image)
+                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="product-image">
+                            @else
+                                <span class="text-muted">لا توجد صورة</span>
+                            @endif
                         </td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ number_format($product->price, 2) }} ج.م</td>
                         <td>
-                            <form action="{{ route('admin.stores.activate', $store->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn {{ $store->is_active ? 'btn-success' : 'btn-secondary' }}">
-                                    <i class="fa {{ $store->is_active ? 'fa-check-circle' : 'fa-times-circle' }} me-2"></i>
-                                    {{ $store->is_active ? 'نشط' : 'غير نشط' }}
-                                </button>
-                            </form>
-                        </td>
-                        <td>
-                            <span class="rating-badge">
-                                <i class="fa fa-star me-1"></i>
-                                {{ $store->rating }}
+                            <span class="badge badge-{{ $product->is_active ? 'success' : 'danger' }}">
+                                {{ $product->is_active ? 'متوفر' : 'غير متوفر' }}
                             </span>
                         </td>
-                        <td>{{ $store->name }}</td>
-                        <td>#{{ $store->id }}</td>
+                        <td>
+                                <a href="{{ route('super.categories.show-store-product', [$category->id, $store->id, $product->id]) }}" class="btn btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <form action="{{ route('super.categories.delete-store-product', [$category->id, $store->id, $product->id]) }}" 
+                                      method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" 
+                                            onclick="return confirm('هل أنت متأكد من حذف هذا المنتج؟')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                        </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5">
+                        <td colspan="6">
                             <div class="empty-state">
-                                <i class="fa fa-store"></i>
-                                <p>لا توجد متاجر متاحة.</p>
+                                <i class="fa fa-box"></i>
+                                <p>لا توجد منتجات متاحة.</p>
                             </div>
                         </td>
                     </tr>
@@ -333,7 +345,7 @@
     </div>
 
     <!-- Pagination Links -->
-    {{ $stores->appends(['search' => $search, 'status' => $status])->links() }}
+    {{ $products->appends(['search' => request('search'), 'status' => request('status')])->links() }}
 </div>
 @endsection
 
@@ -350,4 +362,4 @@
         });
     });
 </script>
-@endpush
+@endpush 

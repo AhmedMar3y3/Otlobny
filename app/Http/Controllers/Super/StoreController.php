@@ -22,8 +22,8 @@ class StoreController extends Controller
             ->when($status === 'inactive', function ($query) {
                 return $query->where('is_active', false);
             })
-            ->with('admin') // Include the admin relationship
-            ->select(['id', 'name', 'rating', 'is_active', 'admin_id'])
+            ->with('admin')
+            ->select(['id', 'name', 'rating', 'is_active', 'admin_id', 'whatsapp'])
             ->paginate(15);
 
         $admins = Admin::select(['id', 'name', 'area'])->get();

@@ -304,6 +304,7 @@
             <thead>
                 <tr>
                     <th>الإجراءات</th>
+                    <th>عدد المتاجر</th>
                     <th>الاسم</th>
                     <th>الصورة</th>
                     <th>#</th>
@@ -323,7 +324,11 @@
                         <button class="btn btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#editCategoryModal{{ $category->id }}">
                             <i class="fas fa-edit"></i>
                         </button>
+                        <a href="{{ route('super.categories.stores', $category->id) }}" class="btn btn-action btn-view">
+                            <i class="fas fa-eye"></i>
+                        </a>
                     </td>
+                    <td>{{ $category->stores->count() }}</td>
                     <td>{{ $category->name }}</td>
                     <td class="p-0">
                         <img src="{{ $category->image }}" alt="Image" style="border-radius: 0%; height: 55px; width: 55px;">

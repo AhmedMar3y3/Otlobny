@@ -26,7 +26,8 @@ class Store extends Authenticatable
         'lng',
         'admin_id',
         'area',
-        'is_open'
+        'is_open',
+        'whatsapp',
     ];
 
     protected $hidden = [

@@ -1,4 +1,4 @@
-@extends('Admin.layout')
+@extends('Super.layout')
 
 @section('styles')
 <style>
@@ -80,22 +80,6 @@
         color: rgba(255,255,255,0.5);
     }
     
-    .btn-primary {
-        background: linear-gradient(135deg, #334155 0%, #0F172A 100%);
-        border: none;
-        border-radius: 8px;
-        padding: 0.8rem 2rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(15,23,42,0.10);
-    }
-    
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #0F172A 0%, #334155 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(15,23,42,0.20);
-    }
-    
     .table-container {
         background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
         border-radius: 15px;
@@ -137,7 +121,7 @@
         background: rgba(56,189,248,0.1);
         border: 1px solid rgba(56,189,248,0.2);
         color: #38bdf8;
-        padding: 0.5rem;
+        padding: 0.5rem 1rem;
         border-radius: 8px;
         transition: all 0.3s ease;
     }
@@ -147,41 +131,22 @@
         transform: translateY(-2px);
     }
     
-    .btn-success {
+    .badge {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    
+    .badge-success {
         background: rgba(16,185,129,0.1);
-        border: 1px solid rgba(16,185,129,0.2);
         color: #10b981;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
+        border: 1px solid rgba(16,185,129,0.2);
     }
     
-    .btn-success:hover {
-        background: rgba(16,185,129,0.2);
-        transform: translateY(-2px);
-    }
-    
-    .btn-secondary {
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
-        color: #fff;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-secondary:hover {
-        background: rgba(255,255,255,0.2);
-        transform: translateY(-2px);
-    }
-    
-    .rating-badge {
-        background: rgba(255,193,7,0.1);
-        color: #ffc107;
-        padding: 0.3rem 1rem;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.9rem;
+    .badge-danger {
+        background: rgba(239,68,68,0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239,68,68,0.2);
     }
     
     .pagination {
@@ -231,7 +196,7 @@
 
 @section('main')
 <div class="container text-end" style="direction: rtl;">
-    <div class="page-header">إدارة المتاجر</div>
+    <div class="page-header">متاجر {{ $category->name }}</div>
     
     @if (Session::has('success'))
     <div class="alert alert-success">
@@ -248,20 +213,12 @@
 
     <!-- Search and Filter Form -->
     <div class="filter-card">
-        <form method="GET" action="{{ route('admin.stores.index') }}">
+        <form method="GET" action="{{ route('super.categories.stores', $category->id) }}">
             <div class="row align-items-end">
                 <div class="col-md-6 mb-3">
                     <label for="search" class="form-label">البحث حسب الاسم</label>
                     <input type="text" name="search" id="search" class="form-control" 
-                           value="{{ $search ?? '' }}" placeholder="أدخل اسم المتجر">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="status" class="form-label">الحالة</label>
-                    <select name="status" id="status" class="form-select">
-                        <option value="all" {{ ($status ?? 'all') === 'all' ? 'selected' : '' }}>الكل</option>
-                        <option value="active" {{ ($status ?? '') === 'active' ? 'selected' : '' }}>نشط</option>
-                        <option value="inactive" {{ ($status ?? '') === 'inactive' ? 'selected' : '' }}>غير نشط</option>
-                    </select>
+                           value="{{ request('search') }}" placeholder="أدخل اسم المتجر">
                 </div>
                 <div class="col-md-2 mb-3">
                     <button type="submit" class="btn btn-primary w-100">
@@ -279,43 +236,31 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>الإجراءات</th>
-                        <th>الحالة</th>
-                        <th>التقييم</th>
-                        <th>الاسم</th>
                         <th>#</th>
+                        <th>اسم المتجر</th>
+                        <th>الحالة</th>
+                        <th>عدد المنتجات</th>
+                        <th>الإجراءات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($stores as $store)
+                    @forelse($stores as $store)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $store->name }}</td>
                         <td>
-                            <a href="{{ route('admin.stores.show', $store->id) }}" class="btn btn-info" title="عرض التفاصيل">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            @if($store->whatsapp)
-                        <a href="https://wa.me/{{ $store->whatsapp }}" target="_blank" class="btn btn-action" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #fff; border: none;">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        @endif
-                        </td>
-                        <td>
-                            <form action="{{ route('admin.stores.activate', $store->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn {{ $store->is_active ? 'btn-success' : 'btn-secondary' }}">
-                                    <i class="fa {{ $store->is_active ? 'fa-check-circle' : 'fa-times-circle' }} me-2"></i>
-                                    {{ $store->is_active ? 'نشط' : 'غير نشط' }}
-                                </button>
-                            </form>
-                        </td>
-                        <td>
-                            <span class="rating-badge">
-                                <i class="fa fa-star me-1"></i>
-                                {{ $store->rating }}
+                            <span class="badge badge-{{ $store->is_active ? 'success' : 'danger' }}">
+                                {{ $store->is_active ? 'نشط' : 'غير نشط' }}
                             </span>
                         </td>
-                        <td>{{ $store->name }}</td>
-                        <td>#{{ $store->id }}</td>
+                        <td>{{ $store->products->count() }}</td>
+                        <td>
+                            <a href="{{ route('super.categories.store-products', [$category->id, $store->id]) }}" 
+                               class="btn btn-info">
+                                <i class="fas fa-box me-1"></i>
+                                المنتجات
+                            </a>
+                        </td>
                     </tr>
                     @empty
                     <tr>
@@ -333,7 +278,7 @@
     </div>
 
     <!-- Pagination Links -->
-    {{ $stores->appends(['search' => $search, 'status' => $status])->links() }}
+    {{ $stores->appends(['search' => request('search'), 'status' => request('status')])->links() }}
 </div>
 @endsection
 

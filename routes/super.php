@@ -40,6 +40,12 @@ Route::prefix('super')->group(function () {
         Route::delete('/stores/{id}',       [StoreController::class, 'destroy'])->name('super.stores.destroy');
         Route::post('/stores/{id}/change-admin',[StoreController::class, 'changeAdmin'])->name('super.stores.changeAdmin');
 
+        // Category Store Products Routes
+        Route::get('categories/{category}/stores', [CategoryController::class, 'getStoresByCategory'])->name('super.categories.stores');
+        Route::get('categories/{category}/stores/{store}/products', [CategoryController::class, 'getStoreProducts'])->name('super.categories.store-products');
+        Route::put('categories/{category}/stores/{store}/products/{product}', [CategoryController::class, 'updateStoreProduct'])->name('super.categories.update-store-product');
+        Route::delete('categories/{category}/stores/{store}/products/{product}', [CategoryController::class, 'deleteStoreProduct'])->name('super.categories.delete-store-product');
+        Route::get('categories/{category}/stores/{store}/products/{product}', [CategoryController::class, 'showStoreProduct'])->name('super.categories.show-store-product');
 
         // // delegates routes //
         // Route::get('/delegates',              [DelegateController::class,'index'])->name('super.delegates.index');

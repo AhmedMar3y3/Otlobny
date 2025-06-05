@@ -15,7 +15,7 @@ class CategoryController extends Controller
         $categories = Category::get();
         return view('Super.categories.index', compact('categories'));
     }
-    
+
     // Store a new category
     public function store(StoreCategoryRequest $request)
     {
@@ -39,5 +39,54 @@ class CategoryController extends Controller
         }
         $category->delete();
         return redirect()->back()->with('success', 'تم حذف الفئة بنجاح.');
+    }
+
+    public function getStoresByCategory($id)
+    {
+        $category = Category::findOrFail($id);
+        $query = $category->stores();
+
+        if (request()->has('search')) {
+            $search = request('search');
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        $stores = $query->paginate(15);
+        return view('Super.categories.stores', compact('stores', 'category'));
+    }
+
+    public function getStoreProducts($categoryId, $storeId)
+    {
+        $category = Category::findOrFail($categoryId);
+        $store = $category->stores()->findOrFail($storeId);
+        $query = $store->products();
+
+        if (request()->has('search')) {
+            $search = request('search');
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        $products = $query->paginate(15);
+        return view('Super.categories.store-products', compact('products', 'store', 'category'));
+    }
+
+    public function showStoreProduct($categoryId, $storeId, $productId)
+    {
+        $category = Category::findOrFail($categoryId);
+        $store = $category->stores()->findOrFail($storeId);
+        $product = $store->products()->findOrFail($productId);
+        return view('Super.categories.show-store-product', compact('product', 'store', 'category'));
+    }
+
+    public function deleteStoreProduct($categoryId, $storeId, $productId)
+    {
+        $category = Category::findOrFail($categoryId);
+        $store = $category->stores()->findOrFail($storeId);
+        $product = $store->products()->findOrFail($productId);
+
+        $product->delete();
+
+        $redirectTo = request('redirect_to', route('super.categories.store-products', [$categoryId, $storeId]));
+        return redirect($redirectTo)->with('success', 'تم حذف المنتج بنجاح.');
     }
 }

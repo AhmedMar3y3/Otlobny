@@ -23,7 +23,7 @@ class StoreController extends Controller
             ->when($status === 'inactive', function ($query) {
                 return $query->where('is_active', false);
             })
-            ->select(['id', 'name', 'rating', 'is_active'])
+            ->select(['id', 'name', 'rating', 'is_active', 'whatsapp'])
             ->paginate(15);
 
         return view('Admin.stores.index', compact('stores', 'search', 'status'));
@@ -32,7 +32,7 @@ class StoreController extends Controller
     public function show($id)
     {
         $store = Store::findOrFail($id);
-        if($store->admin_id != auth('admin')->id()){
+        if ($store->admin_id != auth('admin')->id()) {
             return redirect()->back()->with('error', 'لا يمكنك عرض هذا المتجر.');
         }
         return view('Admin.stores.show', compact('store'));

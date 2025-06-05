@@ -295,6 +295,11 @@
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </form>
+                        @if($store->whatsapp)
+                        <a href="https://wa.me/{{ $store->whatsapp }}" target="_blank" class="btn btn-action" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #fff; border: none;">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        @endif
                     </td>
                     <td>
                         <form action="{{ route('super.stores.changeAdmin', $store->id) }}" method="POST">

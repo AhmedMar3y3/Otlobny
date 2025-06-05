@@ -190,6 +190,16 @@
                     @enderror
                 </div>
 
+                <!-- Phone -->
+                <div class="form-group">
+                    <label for="whatsapp" class="form-label">رقم الواتساب</label>
+                    <input type="text" name="whatsapp" class="form-control" id="whatsapp" value="{{ $user->whatsapp }}">
+                    <small class="form-text text-muted">يرجى إدخال رقم الهاتف بصيغة دولية (مثال: +201234567890)</small>
+                    @error('whatsapp')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <!-- Image -->
                 <div class="form-group">
                     <label for="image" class="form-label">الصورة</label>

@@ -48,6 +48,11 @@ class UpdateProfileRequest extends BaseRequest
                 'nullable',
                 'numeric',
             ],
+            'whatsapp' => [
+                'nullable',
+                'string',
+                'max:15'
+            ],
         ];
     }
 }
