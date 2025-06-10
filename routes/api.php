@@ -77,6 +77,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('store-order'               ,[OrderController::class, 'store']);
     Route::get('orders'                     ,[OrderController::class, 'orders']);
     Route::get('orders/{order}'             ,[OrderController::class, 'showOrder']);
+    Route::get('track-status/{order}'       ,[OrderController::class, 'trackOrderStatus']);
 
     // Address Routes //
     Route::get('/addresses'                  ,[AddressController::class, 'index']);

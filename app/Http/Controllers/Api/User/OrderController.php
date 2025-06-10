@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Http\Resources\Api\User\Order\TrackOrderStatusResource;
 use App\Models\Order;
 use App\Models\Address;
 use App\Enums\OrderPayTypes;
@@ -69,6 +70,11 @@ class OrderController extends Controller
     {
         $order->load(['items', 'items.product']);
         return $this->successWithDataResponse(new OrderResource($order));
+    }
+
+    public function trackOrderStatus(Order $order)
+    {
+        return $this->successWithDataResponse(new TrackOrderStatusResource($order));
     }
 
     // public function getOrderLocation(Order $order)
