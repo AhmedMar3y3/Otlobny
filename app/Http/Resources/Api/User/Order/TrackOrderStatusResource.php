@@ -16,13 +16,14 @@ class TrackOrderStatusResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'map_desc'     => $this->map_desc,
+            'map_desc'      => $this->map_desc,
             'order_num'     => $this->order_num,
             'total_price'   => $this->total_price . ' ' . __('admin.rs'),
             'items'         => OrdersItemsResource::collection($this->items),
             'items_count'   => $this->items->count(),
             'status_num'    => $this->status->value,
             'status_text'   => __('order.' . $this->status->name),
+            'pay_type'      => __('order.' . $this->pay_type->name),
         ];
     }
 }

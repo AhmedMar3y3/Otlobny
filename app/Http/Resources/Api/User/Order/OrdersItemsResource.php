@@ -16,6 +16,7 @@ class OrdersItemsResource extends JsonResource
     {
         return [
             'product_name' => $this->product->name,
+            'product_image' => $this->product->image,
         ];
     }
 }
