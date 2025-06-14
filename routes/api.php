@@ -35,6 +35,7 @@ Route::get('/banners',            [HomeController::class, 'banners']);
 Route::get('/categories'     ,    [HomeController::class, 'categories']);
 Route::get('/offers',             [HomeController::class, 'latestStoresWithOffers']);
 Route::get('/closest-stores',     [HomeController::class, 'closestStores']);
+Route::get('/filter-stores',      [HomeController::class, 'searchForStores']);
 
 // stores routes //
 Route::get('/stores/{categoryId}',  [StoreController::class, 'getStoreByCategory']);

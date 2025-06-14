@@ -23,6 +23,18 @@ class HomeController extends Controller
         $this->storeService = $storeService;
     }
 
+    public function searchForStores()
+    {
+        $stores = Store::where('name', 'like', '%' . request('search') . '%')
+            ->get(['id', 'name', 'image', 'rating']);
+
+        if ($stores->isEmpty()) {
+            return $this->failureResponse('لا توجد متاجر بهذا الاسم');
+        }
+
+        return $this->successWithDataResponse($stores);
+    }
+
     public function banners()
     {
         $banners = Banner::get(['id', 'image']);
