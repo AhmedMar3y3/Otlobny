@@ -17,6 +17,7 @@ class OrderItemsResource extends JsonResource
         return [
             'product_name'      => $this->product->name,
             'product_image'     => $this->product->image,
+            'quantity'          => $this->quantity,
             'price'             => $this->total_price . ' ' . __('admin.rs'),
         ];
     }

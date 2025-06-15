@@ -17,12 +17,7 @@ class OrderResource extends JsonResource
         return [
             'id'            => $this->id,
             'order_num'     => $this->order_num,
-            'items_count'   => $this->items->count(),
-            'total_price'   => $this->total_price .' '. __('admin.rs'),
-            'pay_type'      => __('order.' . $this->pay_type->name),
-            'status'       => __('order.' . $this->status->name),
             'items'         => OrderItemsResource::collection($this->items),
-            'created_at'    => $this->created_at->format('Y-m-d'),
         ];
     }
 }
